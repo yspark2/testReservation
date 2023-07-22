@@ -5,16 +5,20 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class ValidDate() {
-    fun isDate(Date: String): Int {
-        var dateFormat = DateTimeFormatter.ofPattern("yyMMdd")
+class ValidDate(){
+    fun isDate(date: String): Int {
+        var dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd")
         try {
-            var date = LocalDate.parse(Date, dateFormat).toString()
+            var date = LocalDate.parse(date, dateFormat).toString()
             var temp = date.split("-")
-            return (temp[0].substring(2, 4) + temp[1] + temp[2]).toInt()
+            return (temp[0].substring(0, 4) + temp[1] + temp[2]).toInt()
         } catch (e: Exception) {
             return 0
         }
     }
-
 }
+
+//class SplitString(date: String ) : Int {
+//    var temp = date.split("-")
+//    return (temp[0].substring(0, 4) + temp[1] + temp[2]).toInt()
+//}

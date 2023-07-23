@@ -6,19 +6,21 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class ValidDate(){
-    fun isDate(date: String): Int {
+    fun isDate(date: String): Any? {
         var dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd")
         try {
             var date = LocalDate.parse(date, dateFormat).toString()
-            var temp = date.split("-")
-            return (temp[0].substring(0, 4) + temp[1] + temp[2]).toInt()
+            return date
         } catch (e: Exception) {
             return 0
         }
     }
 }
+class SplitString(){
+    fun DateSplit(date:String) :Int{
+        var temp = date.split("-")
+        return (temp[0].substring(0, 4) + temp[1] + temp[2]).toInt()
+    }
 
-//class SplitString(date: String ) : Int {
-//    var temp = date.split("-")
-//    return (temp[0].substring(0, 4) + temp[1] + temp[2]).toInt()
-//}
+}
+

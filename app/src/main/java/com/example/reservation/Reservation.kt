@@ -5,7 +5,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 const val red = "\u001B[31m"
-//var inputReservation: MutableList<String> = mutableListOf()
 open class Reservation {
     var current = LocalDateTime.now()
     var formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
@@ -24,18 +23,19 @@ open class Reservation {
                 "1" -> {
                     inputReservation.add(inputVal("name").toString())
                     inputReservation.add(inputVal("roomNumber").toString())
-                    inputReservation.add(inputVal("checkIn").toString())
-                    inputReservation.add(inputVal("checkOut").toString())
-                    //inputVal("checkIn").toString()
-                    //inputVal("checkOut").toString()
-
-                    println("사용자: ${inputReservation.get(0)} , 방 번호: ${inputReservation.get(1)} , 체크인: ${inputReservation.get(2)} , 체크아웃: ${inputReservation.get(3)} ")
+                    inputVal("checkIn").toString()
+                    inputVal("checkOut").toString()
                 }
 
                 "2" -> {
-//                    메뉴에서 2번을 눌러 호텔 예약자 목록을 보여줘요.
-//    (예시. 1. 사용자: ㅇㅇㅇㅇ, 방 번호: ㅇㅇㅇ호, 체크인: 2023-07-21. 체크아웃: 2023-08-01)
+                    for (idx in 1 .. inputReservation.size step(4)) { // 1 5 9 13 17 21
+                        println("호텔 예약자 목록입니다.")
+                        print("사용자: ${inputReservation.get(idx-1)}, ")
+                        print(" 방 번호: ${inputReservation.get(idx)}, ")
+                        print(" 체크인: ${inputReservation.get(idx+1)}, ")
+                        println(" 체크아웃: ${inputReservation.get(idx+2)} ")
 
+                    }
                 }
             }
         }
@@ -62,13 +62,11 @@ open class Reservation {
                     }
                 }
             }
-
             "name" -> {
                 println("예약자분의 성함을 입력해주세요.")
                 var value2: String? = readLine()
                 return value2
             }
-
             "roomNumber" -> {
                 while (true) {
                     try {
@@ -91,6 +89,8 @@ open class Reservation {
                     try {
                         var checkIn = readLine().toString()
                         var checkInValue = ValidDate().isDate(checkIn)
+                        inputReservation.add(checkInValue.toString())
+                        checkInValue = SplitString().DateSplit(checkInValue.toString())
                         if (formatted.toInt() <= checkInValue && checkInValue != 0) {
                             tempCheckIn = checkInValue
                             return checkInValue
@@ -103,19 +103,21 @@ open class Reservation {
                 }
             }
 
-            "checkOut" ->{
-                while(true){
-                    try{
+            "checkOut" -> {
+                while (true) {
+                    try {
                         println("체크아웃 날짜를 입력해주세요. 표기형식: ${formatted}")
                         var checkOut = readLine().toString()
                         var checkOutValue = ValidDate().isDate(checkOut)
-                        if(checkOutValue > tempCheckIn){
+                        inputReservation.add(checkOutValue.toString())
+                        checkOutValue = SplitString().DateSplit(checkOutValue.toString())
+                        if (checkOutValue > tempCheckIn && checkOutValue != 0) {
                             println("호텔 예약이 완료되었습니다.")
                             return checkOutValue
-                        }else{
+                        } else {
                             println("체크인 날짜보다 이전이거나 같을 수 없으며, 존재하지 않는 날짜를 입력할 수 없습니다.")
                         }
-                    }catch (e : Exception){
+                    } catch (e: Exception) {
                         println("올바르지 않은 표기형식 입니다. 표기형식에 맞춰 다시 입력하세요. ")
                     }
                 }
